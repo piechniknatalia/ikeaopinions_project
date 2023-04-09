@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    {% if request.user.username == name %}
+    <h1>Your opinions</h1>
+    <a href="{% url 'createanopinion' %}">Create Opinion</a>
+    {% else %}
+    <h1>Opinions by {{ name }}</h1>
+    {% endif %}
+    <h5>{{opinion_count}} opinions </h5>
+
+    {% include 'opinions.html' with opinions=opinions %}
+
+{% endblock content %}

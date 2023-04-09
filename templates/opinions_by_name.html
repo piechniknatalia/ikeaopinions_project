@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <main class="profile-page layout layout--3">
+    <div class="container">
+        {% include 'products_component.html' %}
+
+      <!-- Room List Start -->
+      <div class="roomList">
+        <div class="profile">
+          <div class="profile__info">
+            <p>@{{name}}</p>
+          </div>
+          
+          <div class="profile__about">
+            <h3>{{opinion_count}} opinions written</h3>
+            <h3>Last activity: {{last_opinion}} </h3>
+          </div>
+        </div>
+
+        <div class="roomList__header">
+          <div>
+            <h2>Opinions by {{ name }}</a>
+            </h2>
+          </div>
+        </div>
+
+        {% include 'opinions.html' %}
+      </div>
+      <!-- Room List End -->
+
+      <!-- Activities Start -->
+      <div class="activities">
+       
+    </div>
+      <!-- Activities End -->
+    </div>
+  </main>
+{% endblock content %}

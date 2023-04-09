@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <main class="profile-page layout layout--2">
+      <div class="container">
+        <!-- Room Start -->
+        <div class="room">
+          <div class="room__top">
+            <div class="room__topLeft">
+              <a href="{% url 'home' %}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                  <title>arrow-left</title>
+                  <path
+                    d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"
+                  ></path>
+                </svg>
+              </a>
+              <h3>Opinion</h3>
+            </div>
+            {% if request.user == opinion.user %}
+            <div class="room__topRight">
+                <a href="{% url 'deleteopinion' opinion.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> 
+                  <title>remove</title>
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> 
+                </svg>
+              </a>
+            </div>
+            {% endif %}
+          </div>
+          <div class="room__box scroll">
+            <div class="room__header scroll">
+              <div class="room__info">
+                <h3>Opinion about {{opinion.product}}</h3>
+                <span>{{opinion.created|timesince}} ago</span>
+              </div>
+              <div class="room__hosted">
+                <p>Written By</p>
+                <a href="{% url 'opinions_by_name' opinion.user %}" class="room__author">
+                  <span>@{{opinion.user}}</span>
+                </a>
+              </div>
+              <div class="room__details">
+                  {{opinion.opinion}}
+              </div>
+              <span class="room__topics">{{opinion.product}}</span>
+            </div>
+            <div class="room__conversation">
+              <div class="threads scroll">
+                {% for comment in comments %}
+                <div class="thread">
+                  <div class="thread__top">
+                    <div class="thread__author">
+                      <a href="{% url 'opinions_by_name' comment.user %}" class="thread__authorInfo">
+                        <span>@{{comment.user}}</span>
+                      </a>
+                      <span class="thread__date">{{comment.created|timesince}} ago</span>
+                    </div>
+                    {% if request.user == comment.user %}
+                    <a href="{% url 'deletecomment' opinion.id comment.id%}">
+                    <div class="thread__delete">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> 
+                            <title>remove</title>
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> 
+                          </svg>
+                    </div>
+                    </a>
+                    {% endif %}
+                  </div>
+                  <div class="thread__details">
+                    {{comment.body}}
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% if request.user.is_authenticated %}
+          <div class="room__message">
+            <form method="POST" action="#">
+                {% csrf_token %}
+                <input name="" placeholder="Write your comment here..." /></form>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Room End -->
+
+        <!--   Start -->
+        <div class="participants">
+        </div>
+        <!--  End -->
+      </div>
+    </main>
+{% endblock content %}

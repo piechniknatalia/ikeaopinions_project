@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% include 'opinions.html' with opinions=opinions %}
+
+
+<div>
+    <hr>
+    <h3><a href="{% url 'opinions_by_name' opinion.user %}">{{opinion.user}}</a> -- {{opinion.created|timesince}}</h3>
+    <h3>{{opinion.opinion}}</h3>
+    <h3>--<a href="{% url 'opinions_by_product' opinion.product %}">{{opinion.product}}</a> -- </h3>
+    {% if request.user == opinion.user %}
+    <a href="{% url 'deleteopinion' opinion.id %}">Delete</a>
+    {% endif %}
+</div>
+<div> 
+    <hr>
+    <h5>Comments</h5>
+    <hr>
+
+    {% for comment in comments %}
+        <div>
+            <small><a href="{% url 'opinions_by_name' comment.user %}">{{comment.user}}</a>  {{comment.created|timesince}} ago </small>
+            <small><p>{{comment.body}}</p></small>
+            {% if request.user == comment.user %}
+            <small><a href="{% url 'deletecomment' opinion.id comment.id%}">Delete</a></small>
+            {% endif %}
+            <hr>
+        </div>
+
+    {% endfor %}
+</div>
+<div class="comment-form">
+    {% if request.user.is_authenticated %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="text" name="body" placeholder="Write your comments here..."/>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock content %}

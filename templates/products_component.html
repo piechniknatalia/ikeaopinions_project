@@ -1,0 +1,14 @@
+            <!-- Topics Start -->
+            <div class="topics">
+                <div class="topics__header">
+                  <h2>Browse Products</h2>
+                </div>
+                <ul class="topics__list">
+                  {% for product in products %}
+                  <li>
+                    <a href="{% url 'opinions_by_product' pn=product.name %}">{{product.name}}<span>{{product.opinion_set.count}}</span></a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <!-- Topics End -->
